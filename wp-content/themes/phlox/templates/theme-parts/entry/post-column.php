@@ -156,6 +156,10 @@
 
                             <?php if( ( 'quote' !== $post_format && auxin_is_true( $show_excerpt ) ) && auxin_is_true( $show_content ) ) { ?>
                                 <div class="entry-content">
+                                    <hr>
+                                    <div>Price : <?php the_field('price'); ?></div>
+                                    <div>Phone : <?php the_field('phone'); ?></div>
+                                    
                                     <?php
                                     if( 'link' == $post_format ) {
                                         echo '<a href="'. esc_url( $the_link ) .'" class="link-format-excerpt">' . $the_link . '</a>';
@@ -169,6 +173,7 @@
                                         echo '<div class="clear"></div>';
                                     }
                                     ?>
+                                    <hr>
                                 </div>
                             <?php }
                             if( ! isset( $meta_info_position ) || 'after-content' == $meta_info_position ){
