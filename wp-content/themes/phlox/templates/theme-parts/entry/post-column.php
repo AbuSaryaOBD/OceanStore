@@ -8,9 +8,10 @@
                             <?php
                                 $taxonomy_name    = ! isset( $taxonomy_name    ) ? 'category' : $taxonomy_name;
                                 $max_taxonomy_num = ! isset( $max_taxonomy_num ) ? 3 : $max_taxonomy_num;
-                                $cat_terms        = wp_get_post_terms( $post->ID, $taxonomy_name );
+                                $cat_terms        = wp_get_post_terms( $post->ID, $taxonomy_name);
                                 $featured_color   = get_post_meta( $post->ID, 'auxin_featured_color_enabled', true ) ? get_post_meta( $post->ID, 'auxin_featured_color', true ) : auxin_get_option( 'post_single_featured_color' );
                             ?>
+                            
                             <?php ob_start(); ?>
 
                                 <header class="entry-header">
@@ -114,9 +115,10 @@
                                     <?php
                                     } elseif ( 'author' === $author_or_readmore && 'quote' !== $post_format && 'link' !== $post_format && isset( $display_author_footer ) && auxin_is_true( $display_author_footer ) ) { ?>
                                     <div class="author vcard">
-                                        <?php echo get_avatar( get_the_author_meta("user_email"), 32 ); ?>
-                                        <span class="meta-sep"><?php esc_html_e("by", 'phlox'); ?></span>
-                                        <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" rel="author" title="<?php echo esc_attr( sprintf( __( 'View all posts by %s', 'phlox'), get_the_author() ) ); ?>" >
+                                        <!-- Custome Changed : Avatar, esc_htm-e "by"-->
+                                        <?php //echo get_avatar( get_the_author_meta("user_email"), 32 ); ?>
+                                        <span class="meta-sep"><?php esc_html_e("", 'phlox'); ?></span>
+                                        <a href="<?php echo ( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" rel="author" title="<?php echo esc_attr( sprintf( __( 'View all posts by %s', 'phlox'), get_the_author() ) ); ?>" >
                                             <?php the_author(); ?>
                                         </a>
                                     </div>
@@ -156,9 +158,18 @@
 
                             <?php if( ( 'quote' !== $post_format && auxin_is_true( $show_excerpt ) ) && auxin_is_true( $show_content ) ) { ?>
                                 <div class="entry-content">
+                                    <!-- Custom Changed : hr,price,phone,city -->
                                     <hr>
                                     <div>Price : <?php the_field('price'); ?></div>
                                     <div>Phone : <?php the_field('phone'); ?></div>
+                                    <!-- <div>City : <?php  
+                                        // $city_name = 'city';
+                                        // $city_terms = wp_get_post_terms( $post->ID, $city_name);
+                                        // foreach( $city_terms as $index => $term ){
+                                            // echo '<a href="'. get_term_link( $term->slug, $city_name ) .'" title="'.esc_attr__("View all posts in ", 'phlox'). esc_attr( $term->name ) .'" rel="city" >'. esc_html( $term->name ) .'</a>';
+                                        // }
+                                    ?></div>-->
+                                    <div>City : <?php $city = wp_get_post_terms( $post->ID, 'city'); echo $city[0]->name; ?></div>
                                     
                                     <?php
                                     if( 'link' == $post_format ) {
